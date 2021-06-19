@@ -1,0 +1,33 @@
+{
+  "name": "defis",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "node ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ncinsli/defis.git"
+  },
+  "keywords": [
+    "vk",
+    "vk-io",
+    "node.js",
+    "typescript",
+    "wikipedia"
+  ],
+  "author": "ncinsli, leonid novak, vlad reizov, alina.scratch, alan protasov, ivan poddubniy, ruslan isaev",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ncinsli/defis/issues"
+  },
+  "homepage": "https://github.com/ncinsli/defis#readme",
+  "dependencies": {
+    "vk-io": "^4.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^15.12.4",
+    "typescript": "^4.3.4"
+  }
+}
