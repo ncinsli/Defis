@@ -26,6 +26,7 @@
   "dependencies": {
     "axios": "^0.21.1",
     "fs": "0.0.1-security",
+    "node-html-parser": "^3.3.5",
     "ts-node": "^10.0.0",
     "vk-io": "^4.3.1"
   },
