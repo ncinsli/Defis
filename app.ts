@@ -2,10 +2,11 @@ import { VK } from "vk-io";
 import fs from 'fs';
 import { IDefinitionGetter, Definition } from './types/DefinitionGetter';
 import { WikiDefinitionGetter } from "./DefenitionGetters/WikiDefinitionGetter";
+import { ZnachenieDefinitionGetter } from "./DefenitionGetters/ZnachenieDefinitionGetter";
 
 // Объявление главной сущности для работы с апи
 const vk : VK = new VK({ token: fs.readFileSync('token.key', 'utf-8') });
-let definitionGetter : IDefinitionGetter = new WikiDefinitionGetter();
+let definitionGetter : IDefinitionGetter = new ZnachenieDefinitionGetter();
 
 vk.updates.on('message_new', context => {
     
