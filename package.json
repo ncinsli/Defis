@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/ncinsli/defis#readme",
   "dependencies": {
+    "axios": "^0.21.1",
     "fs": "0.0.1-security",
     "ts-node": "^10.0.0",
     "vk-io": "^4.3.1"
