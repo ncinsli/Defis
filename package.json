@@ -2,9 +2,9 @@
   "name": "defis",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "app.ts",
   "scripts": {
-    "test": "node ."
+    "start": "ts-node ./app.ts"
   },
   "repository": {
     "type": "git",
@@ -24,6 +24,8 @@
   },
   "homepage": "https://github.com/ncinsli/defis#readme",
   "dependencies": {
+    "fs": "0.0.1-security",
+    "ts-node": "^10.0.0",
     "vk-io": "^4.3.1"
   },
   "devDependencies": {
