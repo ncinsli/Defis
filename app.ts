@@ -1,4 +1,4 @@
-import { getRandomId, VK } from "vk-io";
+import { getRandomId, Keyboard, VK } from "vk-io";
 import fs from 'fs';
 import { IDefinitionGetter, Definition } from './types/DefinitionGetter';
 import { WikiDefinitionGetter } from "./DefenitionGetters/WikiDefinitionGetter";
@@ -7,6 +7,8 @@ import { getPeerType } from "vk-io/lib/utils/helpers";
 // Объявление главной сущности для работы с апи
 const vk : VK = new VK({ token: fs.readFileSync('token.key', 'utf-8') });
 let definitionGetter : IDefinitionGetter = new WikiDefinitionGetter();
+let lastDefinitionsArray = new Array<Definition>();
+let currentDefinitionIndex = 0;
 
 vk.updates.on('message_new', async context => {
     
@@ -28,14 +30,45 @@ vk.updates.on('message_new', async context => {
         // Берём оригинальное слово
 
         const definitions : Array<Definition> = await definitionGetter.getDefinitions(word);
+        lastDefinitionsArray = definitions;
         // console.log(definition.content);
 
         if (definitions.length === 1) context.reply(definitions[0].content);
-        
+
         else{
-            context.reply('Для этого слова есть несколько определений');
-            definitions.forEach(definition => context.reply(definition.content));
+            context.reply('Для этого слова есть несколько определений');            
+          
+            const keyboard : Keyboard = Keyboard.builder()
+                .textButton({
+                    label : "<",
+                    payload : {}
+                })
+                .textButton({ 
+                    label : ">",
+                    payload : {}
+                })
+                .inline();
+
+            vk.api.messages.send({
+                message : definitions[0].content,
+                random_id : getRandomId(),
+                chat_id : context.chatId,
+                keyboard : keyboard
+            })
+            // definitions.forEach(definition => context.reply(definition.content));
         }
+    }
+    
+    else if (context.text[context.text.length - 1] == '>'){
+        if (currentDefinitionIndex == lastDefinitionsArray.length - 1) return;
+        currentDefinitionIndex++;
+        // Тут нужен код, который редактирует / пишет новое сообщение на следующий элемент массива lastDefinitionsArray
+    }
+
+    else if (context.text[context.text.length - 1] == '<'){
+        if (currentDefinitionIndex == 0) return;
+        currentDefinitionIndex--;
+        // Тут нужен код, который редактирует / пишет новое сообщение на предыдущий элемент массива lastDefinitionsArray
     }
 })
 
