@@ -1,10 +1,9 @@
 export interface IDefinitionGetter{
     sourceName : string;
-    getDefinition : (word: string) => Definition;
+    getDefinitions : (word: string) => Promise<Array<Definition>>;
 }
 
 export type Definition = {
-    translate : () => Definition | 'no translation avaiable';
-    content : string | 'no',
-    attachments : string | 'no' // Пока это строка
+    title : string,
+    content : string,
 }
