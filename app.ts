@@ -10,6 +10,18 @@ let definitionGetter : IDefinitionGetter = new WikiDefinitionGetter();
 let lastDefinitionsArray = new Array<Definition>();
 let currentDefinitionIndex = 0;
 
+let keyboard : Keyboard = Keyboard.builder()
+    .textButton({
+        label : "<",
+        payload : {}
+    })
+    .textButton({ 
+        label : ">",
+        payload : {}
+    })
+    .inline();
+
+
 vk.updates.on('message_new', async context => {
     
     // Проверки на тип (хотя они и не имеют смысл в данном контексте)
@@ -36,18 +48,7 @@ vk.updates.on('message_new', async context => {
         if (definitions.length === 1) context.reply(definitions[0].content);
 
         else{
-            context.reply('Для этого слова есть несколько определений');            
-          
-            const keyboard : Keyboard = Keyboard.builder()
-                .textButton({
-                    label : "<",
-                    payload : {}
-                })
-                .textButton({ 
-                    label : ">",
-                    payload : {}
-                })
-                .inline();
+            await context.reply('Для этого слова есть несколько определений');            
 
             vk.api.messages.send({
                 message : definitions[0].content,
@@ -62,12 +63,27 @@ vk.updates.on('message_new', async context => {
     else if (context.text[context.text.length - 1] == '>'){
         if (currentDefinitionIndex == lastDefinitionsArray.length - 1) return;
         currentDefinitionIndex++;
+
+        vk.api.messages.send({
+            message : lastDefinitionsArray[currentDefinitionIndex].content,
+            random_id : getRandomId(),
+            chat_id : context.chatId,
+            keyboard : keyboard
+        })
         // Тут нужен код, который редактирует / пишет новое сообщение на следующий элемент массива lastDefinitionsArray
     }
 
     else if (context.text[context.text.length - 1] == '<'){
         if (currentDefinitionIndex == 0) return;
         currentDefinitionIndex--;
+
+        
+        vk.api.messages.send({
+            message : lastDefinitionsArray[currentDefinitionIndex].content,
+            random_id : getRandomId(),
+            chat_id : context.chatId,
+            keyboard : keyboard
+        })
         // Тут нужен код, который редактирует / пишет новое сообщение на предыдущий элемент массива lastDefinitionsArray
     }
 })
