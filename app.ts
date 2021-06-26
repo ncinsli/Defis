@@ -89,4 +89,4 @@ vk.updates.on('message_new', async context => {
 })
 
 
-vk.updates.start().catch(console.error);
+vk.updates.start().then(() => console.log("App started")).catch(console.error);
